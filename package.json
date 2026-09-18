@@ -1,0 +1,31 @@
+{
+	"name": "e-commerce-server",
+	"private": true,
+	"version": "1.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": "tsx watch src/index.ts",
+		"build": "tsc",
+		"start": "node dist/index.js"
+	},
+	"dependencies": {
+		"bcryptjs": "latest",
+		"cors": "latest",
+		"dotenv": "^17.4.2",
+		"express": "latest",
+		"jsonwebtoken": "latest",
+		"nodemailer": "^10.0.10",
+		"pg": "^8.23.0",
+		"stripe": "^22.6.2"
+	},
+	"devDependencies": {
+		"@types/cors": "latest",
+		"@types/express": "latest",
+		"@types/jsonwebtoken": "latest",
+		"@types/node": "latest",
+		"@types/nodemailer": "^8.0.2",
+		"@types/pg": "^8.23.1",
+		"tsx": "latest",
+		"typescript": "latest"
+	}
+}
