@@ -44,7 +44,7 @@ export const Home: React.FC = () => {
           </h1>
           
           <p className="mt-6 text-lg leading-8 text-gray-500 hidden lg:block">
-              Discover a curated collection of high-quality clothing, timeless essentials, and modern styles designed for everyday comfort and confidence.
+              Discover a curated collection of high quality clothing, timeless essentials, and modern styles designed for everyday comfort and confidence.
           </p>
           
           <div className="mt-10 flex items-center gap-x-6">

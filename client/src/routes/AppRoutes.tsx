@@ -24,7 +24,6 @@ export const AppRoutes: React.FC = () => {
             <Route path="/products" element={<ProductBrowse />}/>
             <Route path="/products/:id"element={<ProductDetail/>}/>
 
-            {/* protected customer routes */}
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<PrivateRoute element={<Checkout />} />} />
             <Route path="/checkout/success" element={<PrivateRoute element={<CheckoutSuccess />} />} />

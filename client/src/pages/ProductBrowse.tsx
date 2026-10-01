@@ -50,41 +50,50 @@ export const ProductBrowse: React.FC = () => {
     }, [selectedCategory, debouncedSearchQuery, categories.length]);
 
     const handleAddToCartSecure = async (productId: number) => {
-        try {
-            await addToCart(productId, 1);
-
-            alert("Added to your cart.");
-        } catch (err: any) {
-            alert(err.message);
-        }
+        await addToCart(productId, 1);
     };
 
-    return ( 
-        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-center border-b border-gray-100 pb-6 mb-8 gap-4">
-                <ProductSearch value={searchQuery} onChange={setSearchQuery}/>
-            </div>
+    return (
+        <main className="bg-white">
+            <header className="flex min-h-[15rem] items-end bg-black text-white sm:min-h-[18rem] lg:min-h-[19rem]">
+                <div className="mx-auto flex w-full max-w-7xl flex-col gap-7 px-5 py-12 sm:px-8 sm:py-16 md:flex-row md:items-end md:justify-between lg:px-12">
+                    <div className="max-w-2xl text-left">
+                        <p className="text-sm font-bold uppercase text-indigo-300">The collection</p>
+                        <h1 className="mt-4 text-4xl font-black uppercase leading-[0.98] text-white sm:text-6xl">Curated pieces.<br className="hidden sm:block" />Effortless style.</h1>
+                    </div>
+                    <div className="hidden w-full max-w-md md:block">
+                        <ProductSearch value={searchQuery} onChange={setSearchQuery} placeholder="Search the collection" />
+                    </div>
+                </div>
+            </header>
 
-            <div className="grid grid-cols-1 gap-8 lg:grid-cols-4 ">
-                {/* sidebar nav column*/}
-                <div className="lg:col-span-1">
-                    <ProductFilters 
-                        categories={categories} 
-                        selectedCategory={selectedCategory} 
+            <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-5 py-9 sm:px-8 sm:py-12 lg:grid-cols-[13rem_minmax(0,1fr)] lg:gap-12 lg:px-12">
+                <aside className="min-w-0 text-left">
+                    <ProductFilters
+                        categories={categories}
+                        selectedCategory={selectedCategory}
                         onSelectedCategory={setSelectedCategory}
-                />
-                </div>
+                    />
+                </aside>
 
-                <div className="lg:col-span-3">
-                    {error ? ( 
-                        <div className="rounded-2xl bg-red-50 p-4 border  border-red-100 text-sm font-medium text-red-600 text-left animate-pulse">
+                <section aria-label="Products" className="min-w-0">
+                    <div className="mb-5 md:hidden">
+                        <ProductSearch value={searchQuery} onChange={setSearchQuery} placeholder="Search the collection" />
+                    </div>
+                    <div className="mb-6 flex items-baseline justify-between border-b border-gray-200 pb-3 text-left">
+                        <h2 className="text-sm font-bold uppercase text-gray-900">
+                            {selectedCategory || 'All products'}
+                        </h2>
+                    </div>
+                    {error ? (
+                        <p role="alert" className="border-l-2 border-red-600 bg-red-50 px-4 py-3 text-sm text-red-700">
                             {error}
-                        </div>
-                    ) : ( 
-                        <ProductList products={products} isLoading={isLoading} onAddToCart={handleAddToCartSecure}/>
+                        </p>
+                    ) : (
+                        <ProductList products={products} isLoading={isLoading} onAddToCart={handleAddToCartSecure} />
                     )}
-                </div>
+                </section>
             </div>
-        </div>
+        </main>
     );
 };

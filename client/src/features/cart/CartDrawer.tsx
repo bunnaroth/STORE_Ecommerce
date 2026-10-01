@@ -73,7 +73,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ isOpen, onClose }) => {
                 }}
                 className="w-full py-3.5 text-sm font-bold shadow-md"
               >
-                View Full Cart Viewport
+                Next
               </Button>
             </div>
           )}

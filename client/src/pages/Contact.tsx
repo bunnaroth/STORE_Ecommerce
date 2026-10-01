@@ -5,10 +5,12 @@ import { Button } from '../components/common/Button.js';
 import { Input } from '../components/common/Input.js';
 import { clientFetch } from '../api/client.js';
 
+const supportEmail = 'support@example.com';
+
 const contactDetails = [
   {
     label: 'Email',
-    value: 'support@example.com',
+    value: supportEmail,
     Icon: Mail,
   },
   {
@@ -35,7 +37,7 @@ export const Contact: React.FC = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
-    const formData = new FormData(event.currentTarget);
+    const formData = new FormData(form);
     const name = String(formData.get('name') ?? '');
     const email = String(formData.get('email') ?? '');
     const topic = String(formData.get('topic') ?? 'Other');
@@ -50,7 +52,7 @@ export const Contact: React.FC = () => {
         body: { name, email, topic, message },
       });
       form.reset();
-      setStatus({ type: 'success', message: 'Your message has been sent. We will get back to you soon.' });
+      setStatus({ type: 'success', message: 'Your message was sent successfully.' });
     } catch (error) {
       setStatus({
         type: 'error',
@@ -63,13 +65,10 @@ export const Contact: React.FC = () => {
 
   return (
     <main>
-      <header className="bg-black text-white">
-        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+      <header className="flex min-h-[15rem] items-end bg-black text-white sm:min-h-[18rem] lg:min-h-[19rem]">
+        <div className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
           <p className="text-sm font-bold uppercase text-indigo-300">We can help</p>
           <h1 className="mt-4 text-4xl font-black sm:text-6xl">Contact Us</h1>
-          <p className="mt-5 max-w-xl text-base leading-7 text-gray-300">
-            Questions about an item or an order? Send us a note and we’ll point you in the right direction.
-          </p>
         </div>
       </header>
 
@@ -77,7 +76,6 @@ export const Contact: React.FC = () => {
         <section aria-labelledby="contact-form-heading" className="text-left">
           <p className="text-sm font-bold uppercase text-indigo-600">Write to us</p>
           <h2 id="contact-form-heading" className="mt-3 text-2xl font-extrabold text-gray-900">What can we help with?</h2>
-          <p className="mt-2 text-sm leading-6 text-gray-600">Send us a message and we will get back to you by email.</p>
 
           <form onSubmit={handleSubmit} className="mt-7 space-y-5">
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">

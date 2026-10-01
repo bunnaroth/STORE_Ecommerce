@@ -1,16 +1,18 @@
 import React from "react";
 import { RegisterForm } from "../features/auth/RegisterForm";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const Register: React.FC = () => { 
 
     const navigate = useNavigate(); 
+    const location = useLocation();
+    const dismissTo = (location.state as { dismissTo?: string } | null)?.dismissTo ?? '/';
 
     const handleBackdropClick = (
         event: React.MouseEvent<HTMLDivElement>
     ) => { 
         if (event.target === event.currentTarget) { 
-            navigate("/");
+            navigate(dismissTo, { replace: true });
         }
     };
 

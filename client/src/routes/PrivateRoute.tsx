@@ -1,11 +1,10 @@
 import React from "react";
 import { AuthGuard } from "../features/auth/AuthGuard";
 
-interface PrivateRouteProps { 
+interface PrivateRouteProps {
     element: React.ReactElement; 
-    allowedRoles?: ('customer' | 'admin')[];
 }
 
-export const PrivateRoute: React.FC<PrivateRouteProps> = ({element, allowedRoles}) => { 
-    return <AuthGuard allowedRoles={allowedRoles}>{element}</AuthGuard>;
+export const PrivateRoute: React.FC<PrivateRouteProps> = ({element}) => {
+    return <AuthGuard>{element}</AuthGuard>;
 }

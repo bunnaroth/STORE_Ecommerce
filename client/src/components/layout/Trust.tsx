@@ -13,7 +13,7 @@ const benefits = [
   },
   {
     title: 'Easy Returns',
-    description: 'Simple, no-fuss returns.',
+    description: 'Simple, no fuss returns.',
     Icon: RotateCcw,
   },
   {

@@ -90,10 +90,6 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({ onSave }) => {
                 <h3 className="text-lg font-bold text-gray-900">
                     Personal Details
                 </h3>
-
-                <p className="mt-0.5 text-xs text-gray-400">
-                    Manage your personal account information.
-                </p>
             </div>
 
             {message && (

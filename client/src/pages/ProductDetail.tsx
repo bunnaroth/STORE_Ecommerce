@@ -1,16 +1,14 @@
-import { useNavigate, useParams } from "react-router"
+import { Link, useParams } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 import { ProductModel } from "../types/product";
 import { useEffect, useState } from "react";
 import { useCart } from "../hooks/useCart";
 import { productApi } from "../api/productApi";
 import { LoadingSpinner } from "../components/common/LoadingSpinner";
-import { Button } from "../components/common/Button";
 import { ProductDetailView } from "../features/products/ProductDetail";
 
 export const ProductDetail: React.FC = () => { 
     const { id } = useParams<{id: string}>(); 
-    const navigate = useNavigate(); 
-
     const { addToCart} = useCart();
 
     const [product, setProduct] = useState<ProductModel | null>(null); 
@@ -38,13 +36,7 @@ export const ProductDetail: React.FC = () => {
     }, [id]); 
 
     const handleAddToCart = async (productId: number, quantity: number = 1):Promise<void> => { 
-        try { 
-            await addToCart(productId, quantity)
-
-            alert("Added to your cart.");
-        } catch (err: any) { 
-            alert(err.message);
-        }
+        await addToCart(productId, quantity);
     };
 
     if (isLoading) { 
@@ -55,20 +47,22 @@ export const ProductDetail: React.FC = () => {
         );
     }
 
-    return ( 
-        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-            {/* back to catalog nav guide bar */}
-            <div className="mb-6 text-left">
-                <Button variant="secondary" size="sm" onClick={() => navigate('/products')} className="shadow-xs font-semibold">← Back</Button>
-            </div>
+    return (
+        <main className="min-h-[60vh] bg-white">
+            <div className="mx-auto max-w-7xl px-5 py-8 sm:px-8 sm:py-12 lg:px-12">
+                <Link to="/products" className="mb-8 inline-flex items-center gap-2 border-b border-gray-300 pb-1.5 text-sm font-bold text-gray-700 transition-colors hover:border-gray-950 hover:text-gray-950">
+                    <ArrowLeft size={16} aria-hidden="true" />
+                    Back
+                </Link>
 
-            {error || !product ? ( 
-                <div className="rounded-2xl bg-red-50 p-6 border border-red-100 text-sm font-medium text-red-600 text-left animate-pulse"> 
-                    {error || 'Requested item product record was not found.'}
-                </div>
-            ) : ( 
-                <ProductDetailView product={product} onAddToCart={handleAddToCart}/>
-            )}
-        </div>
+                {error || !product ? (
+                    <p role="alert" className="border-l-2 border-red-600 bg-red-50 px-4 py-3 text-sm text-red-700">
+                        {error || 'This product could not be found.'}
+                    </p>
+                ) : (
+                    <ProductDetailView product={product} onAddToCart={handleAddToCart} />
+                )}
+            </div>
+        </main>
     );
 };

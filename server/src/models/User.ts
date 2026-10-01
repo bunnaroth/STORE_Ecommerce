@@ -3,13 +3,14 @@ import { db } from '../config/db.js';
 export interface UserRow { 
     id: number; 
     email: string; 
-    passwordHash: string; 
-    firstName: string | null; 
-    lastName: string | null; 
-    role: 'customer' | 'admin'; 
-    createdAt: Date; 
-    updatedAt: Date; 
+    password_hash: string;
+    first_name: string | null;
+    last_name: string | null;
+    created_at: Date;
+    updated_at: Date;
 }
+
+export type UserProfileRow = Omit<UserRow, 'password_hash'>;
 
 export class UserModel { 
 
@@ -18,11 +19,11 @@ export class UserModel {
         passwordHash: string, 
         firstName?: string, 
         lastName?: string
-    ): Promise<UserRow> { 
+    ): Promise<UserProfileRow> {
         const queryText = `
             INSERT INTO users (email,  password_hash, first_name, last_name)
             VALUES ($1, $2, $3, $4)
-            RETURNING id, email, first_name, last_name, role, created_at, updated_at; 
+            RETURNING id, email, first_name, last_name, created_at, updated_at;
         `;
 
         const values = [ 
@@ -37,18 +38,22 @@ export class UserModel {
     }
 
     static async findByEmail(email: string): Promise<UserRow | null> { 
-        const queryText = `SELECT * FROM users WHERE email = $1`;
+        const queryText = `
+            SELECT id, email, password_hash, first_name, last_name, created_at, updated_at
+            FROM users
+            WHERE email = $1
+        `;
         const { rows } = await db.query(queryText, [email.toLowerCase().trim()]); 
         if (rows.length === 0) return null; 
         return rows[0];
     }
 
-    static async findById(id: number): Promise<Omit<UserRow, 'password_hash'> | null> { 
+    static async findById(id: number): Promise<UserProfileRow | null> {
         // exclude the password hash when retreive the profile
         const queryText = `
-            SELECT id, email, first_name, last_name, role, created_at, updated_at 
-            FROM users 
-            WHERE id = $1; 
+            SELECT id, email, first_name, last_name, created_at, updated_at
+            FROM users
+            WHERE id = $1;
         `;
         const { rows} = await db.query(queryText, [id]); 
 
@@ -61,7 +66,7 @@ export class UserModel {
         email: string, 
         firstName: string, 
         lastName: string, 
-    ): Promise<Omit<UserRow, 'passwordHash'> | null> { 
+    ): Promise<UserProfileRow | null> {
         const queryText = `
             UPDATE users
             SET 
@@ -70,7 +75,7 @@ export class UserModel {
                 last_name = $3, 
                 updated_at = NOW()
             WHERE id = $4
-            RETURNING id, email, first_name, last_name, role, created_at, updated_at;
+            RETURNING id, email, first_name, last_name, created_at, updated_at;
         `;
 
         const values = [ 

@@ -1,35 +1,30 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useCart } from '../hooks/useCart.js';
+import { ArrowLeft } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { CheckoutForm } from '../features/checkout/CheckoutForm.js';
-import { Button } from '../components/common/Button.js';
 
 export const Checkout: React.FC = () => {
-    const { cartItems } = useCart();
-    const navigate = useNavigate();
-
     return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between border-b border-gray-100 pb-6 mb-8 gap-4 text-left">
-        <div>
-            <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">
-            Checkout Secure
-            </h1>
-        </div>
+        <main className="bg-white">
+            <header className="bg-black text-white">
+                <div className="mx-auto flex max-w-7xl flex-col gap-8 px-5 pb-10 pt-14 sm:px-8 sm:pb-14 sm:pt-20 md:flex-row md:items-end md:justify-between lg:px-12">
+                    <div>
+                        <p className="text-sm font-bold uppercase text-indigo-300">STORE / Checkout</p>
+                        <h1 className="mt-5 text-5xl font-black uppercase leading-[0.98] sm:text-6xl lg:text-7xl">Make it yours.</h1>
+                        <p className="mt-5 max-w-xl text-sm leading-6 text-gray-300 sm:text-base">
+                            A few delivery details, then you’ll be on your way.
+                        </p>
+                    </div>
+                    <Link to="/cart" className="inline-flex w-fit items-center gap-2 border-b border-white/50 pb-2 text-sm font-bold text-white transition-colors hover:border-indigo-300 hover:text-indigo-300">
+                        <ArrowLeft size={16} aria-hidden="true" />
+                        Back
+                    </Link>
+                </div>
+            </header>
 
-        <div className="flex items-center gap-2">
-            <Button
-            variant="secondary"
-            size="sm"
-            onClick={() => navigate('/cart')}
-            className="shadow-xs font-semibold"
-            >
-            ← Modify Basket Selection
-            </Button>
-        </div>
-        </div>
-
-        <CheckoutForm />
-    </div>
+            <div className="mx-auto max-w-7xl px-5 pb-16 pt-8 sm:px-8 sm:pb-20 sm:pt-10 lg:px-12">
+                <CheckoutForm />
+            </div>
+        </main>
     );
 };

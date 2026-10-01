@@ -11,9 +11,9 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <CartProvider>
-          <div className="min-h-screen bg-gray-50 text-gray-900 selection:bg-indigo-100 selection:text-idgo-900">
+          <div className="flex min-h-screen flex-col bg-gray-50 text-gray-900 selection:bg-indigo-100 selection:text-idgo-900">
             <Navbar />
-            <main className="grow">
+            <main className="flex-1">
               <AppRoutes/>
             </main>
             <Footer/>

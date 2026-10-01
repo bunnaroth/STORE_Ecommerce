@@ -6,10 +6,10 @@ export const Footer: React.FC = () => {
 
   return (
     <footer className="w-full border-t border-gray-100 bg-white font-sans mt-auto">
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 justify-items-center gap-8 sm:grid-cols-2 md:grid-cols-3 md:gap-12">
+      <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 justify-items-center gap-4 sm:grid-cols-2 md:grid-cols-3 md:gap-6">
 
-          <div className="space-y-3 text-center">
+          <div className="space-y-2 text-center">
             <h3 className="text-sm font-black tracking-tight text-gray-900">
               <span className="text-indigo-600">STORE</span>
             </h3>
@@ -60,7 +60,7 @@ export const Footer: React.FC = () => {
           </div>
 
         </div>
-        <div className="mt-8 border-t border-gray-50 pt-6 text-center text-xs text-gray-400">
+        <div className="mt-4 border-t border-gray-50 pt-3 text-center text-xs text-gray-400">
           <p>&copy; {currentYear} STORE. All rights reserved.</p>
         </div>
       </div>

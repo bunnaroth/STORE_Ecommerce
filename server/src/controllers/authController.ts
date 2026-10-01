@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 import { AuthService } from '../services/authService.js';
 import { generateToken } from '../utils/generateToken.js';
 
-//handle user and admin registration 
-export const registerController = async (req: Request, res: Response): Promise<void> => { 
+//handle user registration
+export const registerController = async (req: Request, res: Response): Promise<void> => {
     try { 
         const { email, password, firstName, lastName} = req.body; 
 
@@ -15,7 +15,7 @@ export const registerController = async (req: Request, res: Response): Promise<v
 
         const user = await AuthService.registerUser(email, password, firstName, lastName); 
 
-        const token = generateToken(user.id, user.role); 
+        const token = generateToken(user.id);
 
         res.status(201).json({user, token});
     } catch (error: any) {
@@ -35,7 +35,7 @@ export const loginController = async (req: Request, res: Response): Promise<void
 
         const user = await AuthService.loginUser(email, password); 
 
-        const token = generateToken(user.id, user.role); 
+        const token = generateToken(user.id);
 
         res.status(200).json({user, token}); 
     } catch (error: any) {

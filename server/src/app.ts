@@ -8,7 +8,25 @@ import contactRoutes from './routes/contactRoutes.js';
 
 const app = express(); 
 
-app.use(cors({origin: process.env.CLIENT_URL || 'http://localhost:5173'})); 
+const configuredClientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
+
+const isLocalhostOrigin = (origin: string): boolean => {
+    try {
+        const { hostname } = new URL(origin);
+        return hostname === 'localhost' || hostname === '127.0.0.1';
+    } catch {
+        return false;
+    }
+};
+
+app.use(cors({
+    origin: (origin, callback) => {
+        const allowed = !origin || origin === configuredClientUrl || (
+            process.env.NODE_ENV !== 'production' && isLocalhostOrigin(origin)
+        );
+        callback(allowed ? null : new Error('Not allowed by CORS'), allowed);
+    },
+}));
 app.use(express.json()); 
 app.use(express.urlencoded({extended: true})); 
 

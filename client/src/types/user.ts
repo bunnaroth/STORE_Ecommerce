@@ -3,7 +3,6 @@ export interface IRawUser {
     email: string;
     first_name: string | null; 
     last_name: string | null;  
-    role: 'customer' | 'admin';
     created_at: string;
     updated_at: string;
 }
@@ -18,14 +17,12 @@ export class UserModel {
     public readonly email: string;
     public readonly firstName: string; 
     public readonly lastName: string;  
-    public readonly role: 'customer' | 'admin';
 
     constructor(raw: IRawUser) {
         this.id = raw.id;
         this.email = raw.email;
         this.firstName = raw.first_name || ''; 
         this.lastName = raw.last_name || '';   
-        this.role = raw.role;
     }
 
 
@@ -34,7 +31,4 @@ export class UserModel {
         return `${this.firstName} ${this.lastName}`.trim();
     }
 
-    get isAdmin(): boolean {
-        return this.role === 'admin';
-    }
 }

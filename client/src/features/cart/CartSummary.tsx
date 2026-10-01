@@ -20,19 +20,19 @@ export const CartSummary: React.FC<CartSummaryProps> = ({
       
       <div className="space-y-3.5 text-sm font-medium text-gray-600">
         <div className="flex justify-between">
-          <span>Total Selected Items</span>
-          <span className="text-gray-900 font-bold">{itemCount} units</span>
+          <span>Total Items</span>
+          <span className="text-gray-900 font-bold">{itemCount} </span>
         </div>
         
         <div className="flex justify-between">
-          <span>Shipping & Delivery</span>
+          <span>Delivery Fee</span>
           <span className="text-emerald-600 font-bold">FREE</span>
         </div>
 
         <hr className="border-gray-50 my-2" />
 
         <div className="flex justify-between text-base font-black text-gray-900 pt-1">
-          <span>Estimated Total</span>
+          <span>Total</span>
           <span className="text-xl font-black text-gray-900">{formattedTotal}</span>
         </div>
       </div>

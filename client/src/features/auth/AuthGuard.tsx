@@ -3,13 +3,12 @@ import { useAuth } from "../../hooks/useAuth";
 import { useEffect } from "react";
 import { LoadingSpinner } from "../../components/common/LoadingSpinner";
 
-interface AuthGuardProps { 
-    children: React.ReactNode; 
-    allowedRoles?: ('customer' | 'admin')[]; 
+interface AuthGuardProps {
+    children: React.ReactNode;
 }
 
-export const AuthGuard: React.FC<AuthGuardProps> = ({children, allowedRoles}) => { 
-    const { isAuthenticated, user, isLoading} = useAuth(); 
+export const AuthGuard: React.FC<AuthGuardProps> = ({children}) => {
+    const { isAuthenticated, isLoading} = useAuth();
     const navigate = useNavigate(); 
     const location = useLocation();
 
@@ -17,17 +16,13 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({children, allowedRoles}) =>
         // If the system finishes reading storage keys and finding no user token session exists
         if (!isLoading && !isAuthenticated) { 
             const from = `${location.pathname}${location.search}${location.hash}`;
-            navigate('/login', { replace: true, state: { from } }); 
+            const state = location.state as { dismissTo?: string } | null;
+            const dismissTo = state?.dismissTo ?? (location.pathname === '/checkout' ? '/cart' : '/');
+            navigate('/login', { replace: true, state: { from, dismissTo } });
             return; 
         }
         
-        // Role-based verification 
-        if (!isLoading && isAuthenticated && user && allowedRoles) { 
-            if (!allowedRoles.includes(user.role)) { 
-                navigate('/', {replace: true});
-            }
-        }
-    }, [isLoading, isAuthenticated, user, allowedRoles, navigate, location]);
+    }, [isLoading, isAuthenticated, navigate, location]);
 
     if (isLoading) { 
         return ( 

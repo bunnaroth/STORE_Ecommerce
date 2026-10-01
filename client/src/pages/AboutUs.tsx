@@ -20,9 +20,9 @@ const values = [
 
 export const AboutUs: React.FC = () => (
   <main>
-    <section className="flex min-h-[58vh] items-end overflow-hidden bg-black sm:min-h-[66vh] lg:min-h-[76vh]">
-      <div className="mx-auto w-full max-w-7xl px-5 pb-12 pt-28 sm:px-8 sm:pb-16 lg:px-12 lg:pb-20">
-        <h1 className="mt-5 max-w-5xl text-5xl font-black uppercase leading-[0.98] text-white sm:text-7xl lg:text-8xl">
+    <section className="flex min-h-[15rem] items-end overflow-hidden bg-black sm:min-h-[18rem] lg:min-h-[19rem]">
+      <div className="mx-auto w-full max-w-7xl px-5 py-14 sm:px-8 sm:py-16 lg:px-12 lg:py-20">
+        <h1 className="max-w-5xl text-4xl font-black uppercase leading-[0.98] text-white sm:text-6xl lg:text-7xl">
           Everyday style,<br className="hidden sm:block" /> chosen well.
         </h1>
       </div>

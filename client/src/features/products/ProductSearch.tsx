@@ -11,7 +11,7 @@ export const ProductSearch: React.FC<ProductSearchProps> = ({
 }) => { 
     return ( 
         <div className="relative w-full max-w-md">
-            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-300">
                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path 
                         strokeLinecap="round" 
@@ -21,9 +21,8 @@ export const ProductSearch: React.FC<ProductSearchProps> = ({
                 </svg>
             </div>
 
-            <input type="text" value={value} onChange={(e) => onChange(e.target.value)} placeholder= {placeholder} 
-                className="w-full rounded-2xl border border-gray-200 bg-white py-3 pl-11 pr-4 text-sm text-gray-900 shadow-sm transition-all duration-200 
-                        placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-500/10"
+            <input type="search" aria-label="Search products" value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder}
+                className="w-full border-b border-gray-500 bg-transparent py-3 pl-10 pr-3 text-sm text-white transition-colors placeholder:text-gray-300 focus:border-white focus:outline-none"
                 />
         </div>
     );

@@ -49,7 +49,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         email: mappedUserModel.email,
         first_name: mappedUserModel.firstName, 
         last_name: mappedUserModel.lastName,   
-        role: mappedUserModel.role,
         created_at: '',
         updated_at: ''
         };

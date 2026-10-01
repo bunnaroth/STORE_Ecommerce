@@ -19,7 +19,7 @@ export const Cart: React.FC = () => {
   const navigate = useNavigate();
 
   const handleCheckoutRedirect = () => {
-    navigate('/checkout');
+    navigate('/checkout', { state: { dismissTo: '/cart' } });
   };
 
   if (isLoading && cartItems.length === 0) {

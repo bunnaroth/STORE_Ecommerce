@@ -19,20 +19,26 @@ export class AuthService {
     }   
 
     // validates login requests 
-    static async loginUser(email:string, passwordRaw: string) { 
+    static async loginUser(email:string, passwordRaw: string) {
         const user = await UserModel.findByEmail(email); 
         if (!user) { 
             throw new Error('Authentication failed: Invalid credentials.'); 
         }
 
-        const isMatch = await bcryptjs.compare(passwordRaw, user.passwordHash); 
+        const isMatch = await bcryptjs.compare(passwordRaw, user.password_hash);
         if(!isMatch) { 
             throw new Error('Authentication failed: Invalid creditials.');
         }
 
         // exclude the password before passing to the controller 
-        const { passwordHash, ...userProfile } = user; 
-        return userProfile;
+        return {
+            id: user.id,
+            email: user.email,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            created_at: user.created_at,
+            updated_at: user.updated_at,
+        };
     }
 
     static async updateProfile( 

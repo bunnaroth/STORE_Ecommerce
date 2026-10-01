@@ -23,11 +23,10 @@ export const authMiddleware = async (
             res.end(JSON.stringify({error: 'Internal configuration validation fault.'})); 
             return;
         }
-        const decoded = jsonwebtoken.verify(token, secret) as { id: number; role: 'customer' | 'admin'}; 
+        const decoded = jsonwebtoken.verify(token, secret) as { id: number };
 
         req.user = { 
             id: decoded.id, 
-            role: decoded.role,
         }; 
 
         await next(); 
