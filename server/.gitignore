@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+out/
+
+# Environment files and secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Test and coverage output
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+
+# Vite cache
+.vite/
+
+# TypeScript build metadata
+*.tsbuildinfo
+
+# Local databases and generated data
+*.sqlite
+*.sqlite3
+
+# Editor files
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini

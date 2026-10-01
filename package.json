@@ -1,31 +1,50 @@
 {
-	"name": "e-commerce-server",
-	"private": true,
-	"version": "1.0.0",
-	"type": "module",
-	"scripts": {
-		"dev": "tsx watch src/index.ts",
-		"build": "tsc",
-		"start": "node dist/index.js"
-	},
-	"dependencies": {
-		"bcryptjs": "latest",
-		"cors": "latest",
-		"dotenv": "^17.4.2",
-		"express": "latest",
-		"jsonwebtoken": "latest",
-		"nodemailer": "^10.0.10",
-		"pg": "^8.23.0",
-		"stripe": "^22.6.2"
-	},
-	"devDependencies": {
-		"@types/cors": "latest",
-		"@types/express": "latest",
-		"@types/jsonwebtoken": "latest",
-		"@types/node": "latest",
-		"@types/nodemailer": "^8.0.2",
-		"@types/pg": "^8.23.1",
-		"tsx": "latest",
-		"typescript": "latest"
-	}
+  "name": "e-commerce-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Full-stack e-commerce application",
+  "type": "module",
+  "scripts": {
+    "dev:server": "cd server && tsx watch src/index.ts",
+    "dev:client": "vite client --config client/vite.config.ts",
+    "dev": "concurrently --kill-others-on-fail -n SERVER,CLIENT -c bgBlue,bgGreen \"npm run dev:server\" \"npm run dev:client\"",
+    "build:server": "tsc -p server/tsconfig.json",
+    "build:client": "tsc -p client/tsconfig.json && vite build client --config client/vite.config.ts",
+    "build": "npm run build:server && npm run build:client",
+    "start": "cd server && node dist/index.js",
+    "preview": "vite preview client --config client/vite.config.ts"
+  },
+  "dependencies": {
+    "bcryptjs": "latest",
+    "cors": "latest",
+    "dotenv": "^17.4.2",
+    "express": "latest",
+    "jsonwebtoken": "latest",
+    "lucide-react": "^1.48.0",
+    "nodemailer": "^10.0.13",
+    "pg": "^8.23.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-router-dom": "latest",
+    "stripe": "^22.6.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/cors": "latest",
+    "@types/express": "latest",
+    "@types/jsonwebtoken": "latest",
+    "@types/node": "latest",
+    "@types/nodemailer": "^8.0.2",
+    "@types/pg": "^8.23.1",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "@vitejs/plugin-react": "latest",
+    "autoprefixer": "^10.6.1",
+    "concurrently": "^10.0.5",
+    "postcss": "^8.5.28",
+    "tailwindcss": "^4.3.3",
+    "tsx": "latest",
+    "typescript": "latest",
+    "vite": "latest"
+  }
 }
