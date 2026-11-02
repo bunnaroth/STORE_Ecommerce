@@ -1,11 +1,11 @@
+import { API_BASE_URL } from './config';
+
 interface FetchOptions extends RequestInit { 
     body?: any; 
 }
 
-const BASE_URL = 'http://localhost:5000/api'; 
-
 export const clientFetch = async <T = any>(endpoint: string, options: FetchOptions = {}): Promise<T> => { 
-    const url = `${BASE_URL}${endpoint}`; 
+    const url = `${API_BASE_URL}${endpoint}`;
     
     const headers = new Headers(options.headers); 
 

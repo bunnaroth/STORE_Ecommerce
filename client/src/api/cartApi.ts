@@ -1,7 +1,8 @@
 import { CartItemModel, IRawCartItem } from "../types/cart";
 import { productApi } from "./productApi";
+import { API_BASE_URL } from "./config";
 
-const BASE_URL = 'http://127.0.0.1:5000/api/cart'; 
+const BASE_URL = `${API_BASE_URL}/cart`;
 
 // helper function for  attach the JWT header into requests
 const getAuthHeaders = () => { 
