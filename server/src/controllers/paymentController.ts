@@ -24,7 +24,7 @@ export const checkoutSessionController = async (req: Request, res: Response): Pr
 };
 
 export const stripeWebhookController = async (req: Request, res: Response): Promise<void> => { 
-    const sig = req.headers['strip-signature']; 
+    const sig = req.headers['stripe-signature'];
     const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
     // Enforce structural boundary safegaurd before running validation porcesses
@@ -45,6 +45,11 @@ export const stripeWebhookController = async (req: Request, res: Response): Prom
     // Handle the target payment confirmation 
     if (event.type === 'checkout.session.completed') { 
         const session = event.data.object as any; 
+
+        if (session.payment_status !== 'paid') {
+            res.status(200).json({received: true, fulfilled: false});
+            return;
+        }
 
         // Extract custom tracking tokens 
         const userId = parseInt(session.metadata.userId, 10); 

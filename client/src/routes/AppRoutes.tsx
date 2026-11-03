@@ -26,7 +26,7 @@ export const AppRoutes: React.FC = () => {
 
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<PrivateRoute element={<Checkout />} />} />
-            <Route path="/checkout/success" element={<PrivateRoute element={<CheckoutSuccess />} />} />
+            <Route path="/checkout/success" element={<CheckoutSuccess />} />
             <Route path="/profile" element={<PrivateRoute element={<Profile/>}/>}/>
 
             {/* fallback catch-all redirect  */}

@@ -27,7 +27,13 @@ app.use(cors({
         callback(allowed ? null : new Error('Not allowed by CORS'), allowed);
     },
 }));
-app.use(express.json()); 
+app.use(express.json({
+    verify: (req, _res, body) => {
+        if (req.url === '/api/payment/webhook') {
+            Object.assign(req, { rawBody: Buffer.from(body) });
+        }
+    },
+}));
 app.use(express.urlencoded({extended: true})); 
 
 app.use('/api/auth', authRoutes); 

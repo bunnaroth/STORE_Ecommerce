@@ -9,6 +9,13 @@ export class StripeService {
         shippingAddressId: number, 
         items: CheckoutLineItem[]
     ) { 
+        const clientUrl = process.env.CLIENT_URL?.replace(/\/+$/, '') ||
+            (process.env.NODE_ENV === 'production' ? undefined : 'http://localhost:5174');
+
+        if (!clientUrl) {
+            throw new Error('CLIENT_URL must be configured for production checkout redirects.');
+        }
+
         const lineItems = []; 
 
         for (const item of items) { 
@@ -47,8 +54,8 @@ export class StripeService {
             line_items: lineItems, 
 
             // Stripe will redirect users here when the flow finishes 
-            success_url: `${process.env.CLIENT_URL || 'http://localhost:5174'}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: `${process.env.CLIENT_URL || 'http://localhost:5174'}/cart`, 
+            success_url: `${clientUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${clientUrl}/cart`,
             metadata: { 
                 userId: userId.toString(), 
                 shippingAddressId: shippingAddressId.toString(), 

@@ -1,19 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useCart } from '../hooks/useCart.js';
 import { Button } from '../components/common/Button.js';
 
 export const CheckoutSuccess: React.FC = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { clearCart } = useCart();
   
   const sessionId = searchParams.get('session_id');
-
-  useEffect(() => {
-   
-    clearCart();
-  }, [clearCart]);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 font-sans">
@@ -33,11 +26,11 @@ export const CheckoutSuccess: React.FC = () => {
         </div>
 
         <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">
-          Payment Processed Successfully.
+          Thank you for your order.
         </h1>
         
         <p className="mt-3 text-base text-gray-500 max-w-md">
-          Thank you for your order.
+          Stripe has returned you from checkout. Your order will be confirmed after secure payment verification.
         </p>
 
         {sessionId && (
