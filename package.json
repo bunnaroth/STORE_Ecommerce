@@ -10,10 +10,10 @@
     "dev": "concurrently --kill-others-on-fail -n SERVER,CLIENT -c bgBlue,bgGreen \"npm run dev:server\" \"npm run dev:client\"",
     "db:setup": "tsx server/src/scripts/setupDatabase.ts",
     "build:server": "tsc -p server/tsconfig.json",
-    "build:client": "tsc -p client/tsconfig.json && vite build client --config client/vite.config.ts --outDir ../dist",
+    "build:client": "tsc -p client/tsconfig.json && vite build client --config client/vite.config.ts",
     "build": "npm run build:server && npm run build:client",
     "start": "cd server && node dist/index.js",
-    "preview": "vite preview client --config client/vite.config.ts --outDir ../dist"
+    "preview": "vite preview client --config client/vite.config.ts"
   },
   "dependencies": {
     "@neon/config": "^1.10.0",
