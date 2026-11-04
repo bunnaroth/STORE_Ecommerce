@@ -46,7 +46,7 @@ export interface CartContextType {
   addToCart: (productId: number, quantity?: number) => Promise<void>;
   updateQuantity: (productId: number, quantity: number) => Promise<void>;
   clearCart: () => Promise<void>;
-  refreshCart: () => Promise<void>;
+  refreshCart: (force?: boolean) => Promise<void>;
 }
 
 export const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -74,7 +74,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
 
     const userId = user?.id;
-    if (!userId || syncingUserId.current === userId || (!force && loadedUserId.current === userId)) return;
+    if (!userId || (!force && (syncingUserId.current === userId || loadedUserId.current === userId))) return;
 
     const currentRequestId = ++requestId.current;
     syncingUserId.current = userId;

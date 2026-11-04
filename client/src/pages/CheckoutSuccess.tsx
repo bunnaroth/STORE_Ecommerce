@@ -1,12 +1,50 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '../components/common/Button.js';
+import { useCart } from '../hooks/useCart.js';
+import { paymentApi } from '../api/paymentApi.js';
 
 export const CheckoutSuccess: React.FC = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  
+  const { cartItems, totalItemCount, refreshCart } = useCart();
+  const [cartSyncError, setCartSyncError] = useState<string | null>(null);
+  const [paymentConfirmed, setPaymentConfirmed] = useState(false);
   const sessionId = searchParams.get('session_id');
+
+  useEffect(() => {
+    if (!sessionId || cartItems.length === 0) return;
+
+    let attempts = 0;
+    let isConfirming = false;
+    let intervalId: number;
+    const confirmPayment = async () => {
+      if (isConfirming) return;
+      isConfirming = true;
+      attempts += 1;
+      try {
+        const result = await paymentApi.confirmCheckoutSession(sessionId);
+        if (result.paid) {
+          await refreshCart(true);
+          setCartSyncError(null);
+          setPaymentConfirmed(true);
+          window.clearInterval(intervalId);
+        } else if (attempts >= 20) {
+          setCartSyncError('Payment confirmation is taking longer than expected. Your cart has not been cleared.');
+          window.clearInterval(intervalId);
+        }
+      } catch (error) {
+        setCartSyncError(error instanceof Error ? error.message : 'Could not confirm your payment.');
+        window.clearInterval(intervalId);
+      } finally {
+        isConfirming = false;
+      }
+    };
+    intervalId = window.setInterval(() => void confirmPayment(), 1500);
+    void confirmPayment();
+
+    return () => window.clearInterval(intervalId);
+  }, [cartItems.length, refreshCart, sessionId]);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 font-sans">
@@ -32,6 +70,25 @@ export const CheckoutSuccess: React.FC = () => {
         <p className="mt-3 text-base text-gray-500 max-w-md">
           Stripe has returned you from checkout. Your order will be confirmed after secure payment verification.
         </p>
+
+        {sessionId && cartItems.length > 0 && (
+          <p role={cartSyncError ? 'alert' : 'status'} className="mt-3 text-sm text-gray-500">
+            {cartSyncError
+              ? cartSyncError
+              : 'Confirming payment and updating your cart...'}
+          </p>
+        )}
+
+        {sessionId && (
+          <div className="mt-5 rounded-xl border border-gray-100 bg-gray-50 px-5 py-4">
+            <p className="text-sm font-semibold text-gray-700">
+              Items in your cart: <span aria-live="polite">{totalItemCount}</span>
+            </p>
+            {paymentConfirmed && totalItemCount === 0 && (
+              <p className="mt-1 text-sm text-emerald-700">Your purchased items have been removed from your cart.</p>
+            )}
+          </div>
+        )}
 
         {sessionId && (
           <div className="mt-6 rounded-xl bg-gray-50 p-3.5 border border-gray-100 w-full max-w-sm text-left">

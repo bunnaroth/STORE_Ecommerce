@@ -23,6 +23,32 @@ export const checkoutSessionController = async (req: Request, res: Response): Pr
     }
 };
 
+export const confirmCheckoutSessionController = async (req: Request, res: Response): Promise<void> => {
+    const { sessionId } = req.body as { sessionId?: unknown };
+
+    if (typeof sessionId !== 'string' || !sessionId) {
+        res.status(400).json({ error: 'A valid Stripe session ID is required.' });
+        return;
+    }
+
+    try {
+        const session = await stripe.checkout.sessions.retrieve(sessionId);
+
+        if (session.metadata?.userId !== String(req.user!.id)) {
+            res.status(403).json({ error: 'This checkout session does not belong to your account.' });
+            return;
+        }
+
+        const paid = session.payment_status === 'paid';
+        if (paid) await CartModel.clearCart(req.user!.id);
+
+        res.status(200).json({ paid });
+    } catch (error) {
+        console.error('Failed to confirm Stripe checkout session:', error);
+        res.status(500).json({ error: 'Could not confirm your payment.' });
+    }
+};
+
 export const stripeWebhookController = async (req: Request, res: Response): Promise<void> => { 
     const sig = req.headers['stripe-signature'];
     const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
